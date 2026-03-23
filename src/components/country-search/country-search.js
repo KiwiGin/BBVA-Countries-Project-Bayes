@@ -10,10 +10,20 @@ export class CountrySearch extends LitElement {
 
   static styles = unsafeCSS(styles);
 
+  /** @type {number|null} */
+  _debounceTimer = null;
+
+  static DEBOUNCE_DELAY = 300;
+
   constructor() {
     super();
     this._query = '';
     this._isSearching = false;
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this._clearDebounce();
   }
 
   render() {
@@ -32,6 +42,30 @@ export class CountrySearch extends LitElement {
 
   _onInput(e) {
     this._query = e.detail.value;
+    this._isSearching = true;
+    this._clearDebounce();
+
+    this._debounceTimer = setTimeout(() => {
+      this._emitSearch(this._query);
+    }, CountrySearch.DEBOUNCE_DELAY);
+  }
+
+  _emitSearch(query) {
+    this._isSearching = false;
+    this.dispatchEvent(
+      new CustomEvent('country-search-change', {
+        detail: { query: query.trim() },
+        bubbles: true,
+        composed: true,
+      })
+    );
+  }
+
+  _clearDebounce() {
+    if (this._debounceTimer) {
+      clearTimeout(this._debounceTimer);
+      this._debounceTimer = null;
+    }
   }
 }
 
