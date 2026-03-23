@@ -67,3 +67,9 @@
     color: var(--color-error, #d32f2f);
   }
 }
+
+.load-more {
+  display: flex;
+  justify-content: center;
+  padding: 24px 0;
+}
