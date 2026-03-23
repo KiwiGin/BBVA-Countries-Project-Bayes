@@ -43,3 +43,14 @@ input {
     box-shadow: 0 0 0 3px rgba(0, 68, 129, 0.15);
   }
 }
+
+@media (max-width: 480px) {
+  input {
+    padding: 12px 12px 12px 42px;
+    font-size: 0.9rem;
+  }
+
+  .search-icon {
+    left: 12px;
+  }
+}

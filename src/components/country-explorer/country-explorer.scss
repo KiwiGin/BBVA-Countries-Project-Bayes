@@ -12,3 +12,9 @@
   color: var(--color-text-light, #666);
   margin-bottom: 8px;
 }
+
+@media (max-width: 480px) {
+  .explorer-search {
+    margin-bottom: 16px;
+  }
+}
