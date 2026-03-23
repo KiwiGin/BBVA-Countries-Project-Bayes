@@ -7,7 +7,41 @@
     <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
   <body>
-    <country-search></country-search>
+    <header class="app-header">
+      <div class="app-header__inner">
+        <div>
+          <div class="app-header__title">Country Explorer</div>
+          <div class="app-header__subtitle">Descubre informacion sobre paises del mundo</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <country-search></country-search>
+      <country-list></country-list>
+    </main>
+
+    <footer class="app-footer">
+      Datos proporcionados por <a href="https://restcountries.com" target="_blank" rel="noopener">REST Countries API</a>
+    </footer>
+
     <script type="module" src="/src/main.js"></script>
+    <script type="module">
+      import { countryService } from '/src/services/country-service.js';
+      const search = document.querySelector('country-search');
+      const list = document.querySelector('country-list');
+      search.addEventListener('country-search-change', async (e) => {
+        list.loading = true;
+        list.error = '';
+        try {
+          const results = await countryService.searchByName(e.detail.query);
+          if (results) list.countries = results;
+        } catch (err) {
+          list.error = 'Error al buscar paises. Intenta de nuevo.';
+        } finally {
+          list.loading = false;
+        }
+      });
+    </script>
   </body>
 </html>

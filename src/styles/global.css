@@ -11,7 +11,7 @@
   --color-primary-dark: #002e5d;
   --color-secondary: #1973b8;
   --color-accent: #f8cd51;
-  --color-bg: #f4f4f4;
+  --color-bg: #f0f2f5;
   --color-surface: #ffffff;
   --color-text: #333333;
   --color-text-light: #666666;
@@ -33,9 +33,59 @@ body {
   color: var(--color-text);
   line-height: 1.6;
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 a {
   color: var(--color-primary);
   text-decoration: none;
+}
+
+.app-header {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: #fff;
+  padding: 20px 24px;
+  box-shadow: var(--shadow-md);
+}
+
+.app-header__inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.app-header__title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.app-header__subtitle {
+  font-size: 0.85rem;
+  opacity: 0.8;
+  font-weight: 400;
+}
+
+.app-main {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+.app-footer {
+  background-color: var(--color-primary-dark);
+  color: rgba(255, 255, 255, 0.7);
+  text-align: center;
+  padding: 16px 24px;
+  font-size: 0.8rem;
+  margin-top: auto;
+}
+
+.app-footer a {
+  color: var(--color-accent);
 }

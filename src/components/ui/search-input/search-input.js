@@ -42,6 +42,8 @@ export class SearchInput extends LitElement {
   }
 
   _onInput(e) {
+    // DECISION: composed: true para que el evento atraviese el Shadow DOM
+    // y pueda ser escuchado por componentes padres
     this.dispatchEvent(
       new CustomEvent('search-input', {
         detail: { value: e.target.value },

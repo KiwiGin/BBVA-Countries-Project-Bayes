@@ -20,6 +20,8 @@ export class AppCard extends LitElement {
       clickable: this.clickable,
     };
 
+    // DECISION: role dinámico (button vs article) para que lectores de pantalla
+    // anuncien correctamente si la card es interactiva o solo informativa
     return html`
       <div
         class=${classMap(classes)}

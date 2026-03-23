@@ -10,9 +10,12 @@ export class CountrySearch extends LitElement {
 
   static styles = unsafeCSS(styles);
 
-  /** @type {number|null} */
+  // DECISION: debounce manual en vez de librería (lodash) porque es una sola función
+  // y no justifica añadir una dependencia externa para un setTimeout
   _debounceTimer = null;
 
+  // DECISION: 300ms es el mínimo exigido por los requisitos y es suficiente para
+  // evitar llamadas excesivas sin que el usuario perciba lag
   static DEBOUNCE_DELAY = 300;
 
   constructor() {
@@ -21,6 +24,8 @@ export class CountrySearch extends LitElement {
     this._isSearching = false;
   }
 
+  // DECISION: limpieza en disconnectedCallback y no en el constructor porque
+  // el timer solo existe después del primer input, evitamos memory leaks al desmontar
   disconnectedCallback() {
     super.disconnectedCallback();
     this._clearDebounce();
