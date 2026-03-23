@@ -19,6 +19,7 @@
     <main class="app-main">
       <country-search></country-search>
       <country-list></country-list>
+      <country-detail style="display:none"></country-detail>
     </main>
 
     <footer class="app-footer">
@@ -30,6 +31,8 @@
       import { countryService } from '/src/services/country-service.js';
       const search = document.querySelector('country-search');
       const list = document.querySelector('country-list');
+      const detail = document.querySelector('country-detail');
+
       search.addEventListener('country-search-change', async (e) => {
         list.loading = true;
         list.error = '';
@@ -41,6 +44,19 @@
         } finally {
           list.loading = false;
         }
+      });
+
+      list.addEventListener('country-select', (e) => {
+        detail.country = e.detail.country;
+        search.style.display = 'none';
+        list.style.display = 'none';
+        detail.style.display = 'block';
+      });
+
+      detail.addEventListener('country-detail-back', () => {
+        detail.style.display = 'none';
+        search.style.display = 'block';
+        list.style.display = 'block';
       });
     </script>
   </body>
