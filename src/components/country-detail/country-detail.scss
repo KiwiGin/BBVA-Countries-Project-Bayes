@@ -1,0 +1,143 @@
+:host {
+  display: block;
+  animation: fadeIn var(--transition-normal, 300ms ease);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :host {
+    animation: none;
+  }
+}
+
+.detail-header {
+  margin-bottom: 24px;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--color-primary, #004481);
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 8px 4px;
+  border-radius: var(--radius-sm, 4px);
+  transition: color var(--transition-fast, 150ms ease);
+
+  &:hover {
+    color: var(--color-primary-dark, #002e5d);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--color-primary, #004481);
+    outline-offset: 2px;
+  }
+}
+
+.detail-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: start;
+}
+
+.flag-section {
+  img {
+    width: 100%;
+    border-radius: var(--radius-md, 8px);
+    box-shadow: var(--shadow-md, 0 4px 6px rgba(0, 0, 0, 0.1));
+  }
+}
+
+.info-section {
+  h1 {
+    font-size: 1.8rem;
+    margin: 0 0 4px;
+    color: var(--color-text, #333);
+  }
+
+  .official-name {
+    font-size: 0.9rem;
+    color: var(--color-text-light, #666);
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-text-light, #666);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .value {
+    font-size: 0.95rem;
+    color: var(--color-text, #333);
+    font-weight: 500;
+  }
+}
+
+.tags-section {
+  margin-bottom: 16px;
+
+  .tags-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--color-text-light, #666);
+    margin-bottom: 8px;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+}
+
+.extra-slot {
+  margin-top: 24px;
+}
+
+@media (max-width: 768px) {
+  .detail-content {
+    grid-template-columns: 1fr;
+  }
+
+  .info-section h1 {
+    font-size: 1.4rem;
+  }
+
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+}
