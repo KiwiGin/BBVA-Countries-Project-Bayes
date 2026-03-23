@@ -1,0 +1,13 @@
+:host {
+  display: block;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.status {
+  margin-top: 8px;
+  font-size: 0.85rem;
+  color: var(--color-text-light, #666);
+  min-height: 1.2em;
+}
