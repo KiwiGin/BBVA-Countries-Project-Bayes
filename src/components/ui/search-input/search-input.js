@@ -1,6 +1,8 @@
 import { LitElement, html, unsafeCSS } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import { live } from 'lit/directives/live.js';
+import { Search } from 'lucide';
+import { renderIcon } from '../../../utils/icons.js';
 import styles from './search-input.scss?inline';
 
 export class SearchInput extends LitElement {
@@ -27,7 +29,7 @@ export class SearchInput extends LitElement {
 
     return html`
       <div class=${classMap(containerClasses)}>
-        <span class="search-icon" aria-hidden="true">🔍</span>
+        <span class="search-icon" aria-hidden="true">${renderIcon(Search)}</span>
         <input
           type="search"
           placeholder=${this.placeholder}
