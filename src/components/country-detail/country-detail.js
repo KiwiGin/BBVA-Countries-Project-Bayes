@@ -24,10 +24,24 @@ export class CountryDetail extends LitElement {
 
   // DECISION: connectedCallback para focus management en vez del constructor
   // porque el DOM del host debe estar conectado al documento para recibir foco
+  // DECISION: bind del handler en constructor para poder hacer removeEventListener
+  // con la misma referencia en disconnectedCallback
+  _handleKeyDown = (e) => {
+    if (e.key === 'Escape') this._onBack();
+  };
+
   connectedCallback() {
     super.connectedCallback();
     this.setAttribute('tabindex', '-1');
+    this.setAttribute('role', 'region');
+    this.setAttribute('aria-label', 'Detalle del pais');
     requestAnimationFrame(() => this.focus());
+    document.addEventListener('keydown', this._handleKeyDown);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    document.removeEventListener('keydown', this._handleKeyDown);
   }
 
   render() {

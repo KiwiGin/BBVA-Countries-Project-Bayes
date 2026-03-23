@@ -62,7 +62,7 @@ export class CountryList extends LitElement {
 
   _renderSkeletons() {
     return html`
-      <div class="country-grid">
+      <div class="country-grid" aria-busy="true" aria-label="Cargando resultados">
         ${Array.from({ length: CountryList.SKELETON_COUNT }, () => html`
           <app-skeleton variant="card"></app-skeleton>
         `)}
@@ -72,7 +72,7 @@ export class CountryList extends LitElement {
 
   _renderError() {
     return html`
-      <div class="state-message state-message--error">
+      <div class="state-message state-message--error" role="alert">
         <p>${this.error}</p>
         <app-button variant="secondary" @button-click=${this._onRetry}>
           Reintentar
@@ -94,7 +94,7 @@ export class CountryList extends LitElement {
     const hasMore = this.countries.length > this._visibleCount;
 
     return html`
-      <div class="country-grid">
+      <div class="country-grid" role="list" aria-label="Lista de paises">
         ${repeat(
           visible,
           (country) => country.cca3,

@@ -61,19 +61,23 @@ export class CountryExplorer extends LitElement {
       display: isDetailView ? 'none' : 'block',
     };
 
+    // DECISION: aria-live="polite" en results-count para que lectores de pantalla
+    // anuncien los resultados sin interrumpir la lectura actual del usuario
     return html`
-      <div style=${styleMap(listViewStyles)}>
+      <div style=${styleMap(listViewStyles)} role="search" aria-label="Explorador de paises">
         <div class="explorer-search">
           <country-search
             @country-search-change=${this._onSearch}
           ></country-search>
         </div>
 
-        ${when(this._lastQuery && !this._loading && !this._error, () => html`
-          <div class="results-count">
-            ${this._countries.length} resultado(s) para "${this._lastQuery}"
-          </div>
-        `)}
+        <div aria-live="polite" aria-atomic="true">
+          ${when(this._lastQuery && !this._loading && !this._error, () => html`
+            <div class="results-count">
+              ${this._countries.length} resultado(s) para "${this._lastQuery}"
+            </div>
+          `)}
+        </div>
 
         <country-list
           .countries=${this._countries}
