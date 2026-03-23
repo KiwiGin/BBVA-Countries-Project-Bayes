@@ -1,11 +1,21 @@
 import { LitElement, html, unsafeCSS } from 'lit';
+import { when } from 'lit/directives/when.js';
+import { map } from 'lit/directives/map.js';
+import { History } from 'lucide';
+import { renderIcon } from '../../utils/icons.js';
 import '../ui/search-input/search-input.js';
 import styles from './country-search.scss?inline';
+
+// DECISION: localStorage key como constante del módulo para evitar colisiones
+// con otras apps que pudieran estar en el mismo dominio ejemplo localhost
+const STORAGE_KEY = 'country-explorer:recent-searches';
+const MAX_RECENT = 5;
 
 export class CountrySearch extends LitElement {
   static properties = {
     _query: { type: String, state: true },
     _isSearching: { type: Boolean, state: true },
+    _recentSearches: { type: Array, state: true },
   };
 
   static styles = unsafeCSS(styles);
@@ -22,6 +32,9 @@ export class CountrySearch extends LitElement {
     super();
     this._query = '';
     this._isSearching = false;
+    // DECISION: lectura de localStorage en constructor porque es síncrono
+    // y necesitamos los datos antes del primer render
+    this._recentSearches = this._loadRecent();
   }
 
   // DECISION: limpieza en disconnectedCallback y no en el constructor porque
@@ -32,6 +45,8 @@ export class CountrySearch extends LitElement {
   }
 
   render() {
+    const showRecent = !this._isSearching && !this._query && this._recentSearches.length > 0;
+
     return html`
       <search-input
         .value=${this._query}
@@ -42,6 +57,26 @@ export class CountrySearch extends LitElement {
       <div class="status" role="status" aria-live="polite">
         ${this._isSearching ? 'Buscando...' : ''}
       </div>
+
+      ${when(showRecent, () => html`
+        <div class="recent-searches">
+          <div class="recent-label">
+            ${renderIcon(History, { size: 14 })} Búsquedas recientes
+            <button class="recent-clear" @click=${this._clearRecent}>Limpiar</button>
+          </div>
+          <div class="recent-list" role="list" aria-label="Búsquedas recientes">
+            ${map(this._recentSearches, (term) => html`
+              <button
+                class="recent-item"
+                role="listitem"
+                @click=${() => this._onRecentClick(term)}
+              >
+                ${term}
+              </button>
+            `)}
+          </div>
+        </div>
+      `)}
     `;
   }
 
@@ -57,13 +92,57 @@ export class CountrySearch extends LitElement {
 
   _emitSearch(query) {
     this._isSearching = false;
+    const trimmed = query.trim();
+
+    if (trimmed) {
+      this._saveRecent(trimmed);
+    }
+
     this.dispatchEvent(
       new CustomEvent('country-search-change', {
-        detail: { query: query.trim() },
+        detail: { query: trimmed },
         bubbles: true,
         composed: true,
       })
     );
+  }
+
+  _onRecentClick(term) {
+    this._query = term;
+    this._emitSearch(term);
+  }
+
+  _loadRecent() {
+    try {
+      return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
+    } catch {
+      return [];
+    }
+  }
+
+  _saveRecent(term) {
+    // DECISION: filtrar duplicados y limitar a 5 para no saturar la UI
+    // ni el localStorage con búsquedas obsoletas
+    const filtered = this._recentSearches.filter(
+      (t) => t.toLowerCase() !== term.toLowerCase()
+    );
+    const updated = [term, ...filtered].slice(0, MAX_RECENT);
+    this._recentSearches = updated;
+
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updated));
+    } catch {
+      // localStorage lleno o no disponible, no es crítico
+    }
+  }
+
+  _clearRecent() {
+    this._recentSearches = [];
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      // no es crítico
+    }
   }
 
   _clearDebounce() {

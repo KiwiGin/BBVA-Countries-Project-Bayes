@@ -11,3 +11,59 @@
   color: var(--color-text-light, #666);
   min-height: 1.2em;
 }
+
+.recent-searches {
+  margin-top: 12px;
+
+  .recent-label {
+    font-size: 0.8rem;
+    color: var(--color-text-light, #666);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .recent-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .recent-item {
+    background: var(--color-surface, #fff);
+    border: 1px solid #ddd;
+    border-radius: var(--radius-lg, 16px);
+    padding: 4px 12px;
+    font-size: 0.85rem;
+    color: var(--color-text, #333);
+    cursor: pointer;
+    transition: background-color var(--transition-fast, 150ms ease),
+                border-color var(--transition-fast, 150ms ease);
+
+    &:hover {
+      background-color: rgba(0, 68, 129, 0.06);
+      border-color: var(--color-primary, #004481);
+      color: var(--color-primary, #004481);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--color-primary, #004481);
+      outline-offset: 2px;
+    }
+  }
+
+  .recent-clear {
+    background: none;
+    border: none;
+    font-size: 0.75rem;
+    color: var(--color-text-light, #999);
+    cursor: pointer;
+    margin-left: auto;
+    padding: 2px 6px;
+
+    &:hover {
+      color: var(--color-error, #d32f2f);
+    }
+  }
+}
