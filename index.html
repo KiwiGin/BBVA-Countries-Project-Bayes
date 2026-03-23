@@ -4,10 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Country Explorer</title>
+    <link rel="icon" href="/mundo.ico" />
     <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
   <body>
-    <country-explorer></country-explorer>
+    <header class="app-header">
+      <div class="app-header__inner">
+        <div>
+          <div class="app-header__title">Country Explorer</div>
+          <div class="app-header__subtitle">Descubre informacion sobre paises del mundo</div>
+        </div>
+      </div>
+    </header>
+
+    <main class="app-main">
+      <country-explorer></country-explorer>
+    </main>
+
+    <footer class="app-footer">
+      Datos proporcionados por <a href="https://restcountries.com" target="_blank" rel="noopener">REST Countries API</a>
+    </footer>
+
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
