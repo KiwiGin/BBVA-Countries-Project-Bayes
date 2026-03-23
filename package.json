@@ -1,0 +1,14 @@
+{
+  "name": "country-explorer",
+  "version": "1.0.0",
+  "description": "Country explorer app built with Lit 3 Web Components",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": ["lit", "web-components", "countries"],
+  "author": "",
+  "license": "ISC"
+}
