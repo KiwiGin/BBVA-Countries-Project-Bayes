@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  min-height: 60vh;
+}
+
+.explorer-search {
+  margin-bottom: 24px;
+}
+
+.results-count {
+  font-size: 0.85rem;
+  color: var(--color-text-light, #666);
+  margin-bottom: 8px;
+}
