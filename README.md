@@ -11,6 +11,7 @@ npm install
 npm run dev      # Servidor de desarrollo (Vite)
 npm run build    # Build de produccion
 npm run preview  # Preview del build
+npm test         # Tests
 ```
 
 ## Arbol de carpetas
